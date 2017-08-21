@@ -1,13 +1,17 @@
+# -*- coding: utf-8 -*-
 from flask import Flask
-from web.flaskr import flaskr
 
+from admin.view import admin
+from front.view  import front
 
-app = Flask(__name__)
-app.register_blueprint(flaskr)
-# app.register_blueprint(admin)
-
-
-app.debug = True
+app  = Flask(__name__)
+app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint( front )
 
 if __name__ == '__main__':
-    app.run()
+    app.run(
+    host = '127.0.0.1',
+    port = 5001,
+    debug = True
+    )
